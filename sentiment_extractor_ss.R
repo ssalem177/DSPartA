@@ -3,11 +3,8 @@
 
 # loading required packages
 library(tidyverse)
-library(readr)
-library(stringr)
 library(dplyr)
 library(tidytext)
-library(plotly)
 library(textstem)
 
 # Loading the populated jeyre database
@@ -82,9 +79,6 @@ for (i in 1:length(jeyre_fix$dialogue)){
 
 # Doing sentiment analysis now
 
-# goal is to write a function on how to sentiment analysis on a character list, then apply that
-# to each row of jeyre_fix database, then change the value of the sentiment column
-
 string_to_sentiment <- function(text){
   
   tibble_text <- tibble(text) # getting a tibble, used for conversion into tokens
@@ -95,31 +89,10 @@ string_to_sentiment <- function(text){
   
   tokens_sr$word <- lemmatize_words(tokens_sr$word) # lemmatization
   
-  sentiments <- get_sentiments("afinn") # basic sentiment dictionary, scored from -5 to 5
-  # Consider different dictionaries, senticnet, sentiword, vader - good for shorter quotes
-  tokens_sr <- tokens_sr %>%
+  sentiments <- get_sentiments("afinn") # afinn is the chosen dictionary
+  
+  tokens_sr <- tokens_sr %>% # finalizing the sentiment analysis, assigning scores
     inner_join(sentiments)
-  
-  # Counting "negative" words
-  
-  #neg_sent <- tokens_sr %>% filter(sentiments == "sadness")
-                    
-  #num_neg <- length(neg_sent$sentiments)
-    
-  # Counting "positive" words
-                    
-  #pos_sent <- tokens_sr %>% filter(sentiments == "joy")
-  
-  #num_pos <- length(pos_sent$sentiments)
-  
-  # If there are more negative words, return -num_neg, else retrun num_pos
-  
-  #if (max(tokens_sr$value) > -min(tokens_sr$value)){
-    #return(max(tokens_sr$value))
-  #}
-  #if (max(tokens_sr$value) <= -min(tokens_sr$value)){
-    #return(min(tokens_sr$value))
-  #}
   
   return(mean(tokens_sr$value,na.rm=TRUE))
 }
@@ -250,7 +223,7 @@ for (i in 1:length(jeyre_relationships$speaker)){
 
 jeyre_relationships <- jeyre_relationships %>% filter(remove != 1)
 
-# removing the 'remove ' column
+# removing the 'remove' column
 
 jeyre_relationships <- jeyre_relationships %>% select(-remove)
 
@@ -265,7 +238,7 @@ jeyre_relationships %>% ggplot(aes(chapter, counts, colour = speaker)) + geom_li
   lims(x=c(0,40), y = c(0,20)) + 
   theme_bw()
 
-# Getting a weighted average of all sentiment to Jane
+# Getting a weighted average of all sentiment from Jane
 
 mean_sentiment_from_jane <- 
   sum(jeyre_relationships$sentiment * jeyre_relationships$counts)/sum(jeyre_relationships$counts)

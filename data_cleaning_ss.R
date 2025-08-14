@@ -1,12 +1,11 @@
 # Author: Sami Salem
-# Last Modified: July 24, 2025
+# Last Modified: August 14, 2025
 
-# loading required packages
+# loading required package
+
 library(tidyverse)
-library(readr)
-library(stringr)
 
-# reading in jeyre book, source https://www.gutenberg.org/ebooks/1260, the plaintext file
+# reading in jeyre book
 
 jeyre <- read.delim('jeyre.txt', 
                     header = FALSE, # There is no header as it is simply a text file
@@ -279,7 +278,7 @@ for (i in 1:(length(jeyre_paragraph_grouped_wide$dialogue))){
 # fix up the ordering a bit of the columns, makes it more readable
 
 jeyre_paragraph_grouped_wide <- jeyre_paragraph_grouped_wide %>%
-  select(paragraph, append, dialogue, speaker, addressee, subject, sentiment, chapter)
+  select(paragraph, append, dialogue, speaker, addressee, subject, sentiment, chapter) 
 
 # writing final tibble as a csv file, ready to use for Python analysis
 
