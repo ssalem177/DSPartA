@@ -6,7 +6,7 @@ As a preliminary task, please download the jeyre.txt file, this is the text file
 
 The timeline of running the files are shown as follows - 
 
-1. Run the 'data_cleaning_ss.R; file
+1. Run the 'data_cleaning_ss.R' file
    - This will convert the text file of the novel to a csv file
    - It will save a csv file called 'jeyrewide.csv' to your directory
   
