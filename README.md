@@ -21,4 +21,4 @@ The timeline of running the files are shown as follows -
      sentiment analysis
 
 
-There is also the 'speaker_test.ss.R' file, which isn't required to run but contains details on a random test on 100 rows from 'jeyrefix.csv'
+There is also the 'attribution_test.ss.R' file, which isn't required to run but contains details on a random test on the dialogue attribution algorithm for 100 rows from 'jeyrefix.csv'
