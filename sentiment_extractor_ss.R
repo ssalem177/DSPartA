@@ -1,5 +1,5 @@
 # Author: Sami Salem
-# Last Modified: Aug 14, 2025
+# Last Modified: Aug 15, 2025
 
 # loading required packages
 library(tidyverse)
@@ -17,11 +17,11 @@ jeyre_fix <- read_csv("jeyre_fix.csv")
 
 dialogue <- bind_cols(interactions = jeyre_fix$dialogue,
                       # how many matches for each dictionary
-                      counts_bing = numeric(517), 
-                      counts_afinn = numeric(517),
-                      counts_nrc = numeric(517),
+                      counts_bing = numeric(487), 
+                      counts_afinn = numeric(487),
+                      counts_nrc = numeric(487),
                       # the length of the interaction
-                      length = numeric(517))
+                      length = numeric(487))
         
 # Checking how many matches for each row in each dialogue
 
@@ -63,6 +63,8 @@ for (i in 1:length(dialogue$interactions)){
 }
 
 # Finding the coverage for each dictionary
+
+# Values for Table 12
 
 sum(dialogue$counts_nrc)/sum(dialogue$length)
 sum(dialogue$counts_afinn)/sum(dialogue$length)
@@ -115,6 +117,7 @@ for (i in 1:length(jeyre_fix$sentiment)){
 jeyre_fix <- jeyre_fix %>% mutate(dummy = c(1)) # adding this in to count interactions
 
 # interactions from Jane
+
 jeyre_relationships <- 
   jeyre_fix %>% 
   group_by(speaker, addressee, chapter) %>%
@@ -167,18 +170,21 @@ jeyre_relationships <- jeyre_relationships %>% filter(remove != 1)
 
 jeyre_relationships <- jeyre_relationships %>% select(-remove)
 
-# Plots
+# Figure 2
 jeyre_relationships %>% ggplot(aes(chapter, sentiment, colour = addressee)) + geom_line(se = FALSE) + 
   labs(title = "Tracking sentiment from Jane thoughout novel", x = 'Chapter', y = 'Sentiment', color = 'Addressee') + 
   lims(x=c(0,40), y = c(-5,5)) +
   theme_bw()
 
+# Figure 4
 jeyre_relationships %>% ggplot(aes(chapter, counts, colour = addressee)) + geom_line(se = FALSE) + 
   labs(title = "Tracking interactions from Jane thoughout novel", x = 'Chapter', y = 'Interactions', color = 'Addressee') + 
   lims(x=c(0,40), y = c(0,20)) +
   theme_bw()
 
 # finding the mean of all sentiments from jane
+
+# Left Column of Table 14
 
 mean_sentiment_from_jane <- mean(jeyre_relationships$sentiment)
 
@@ -227,12 +233,13 @@ jeyre_relationships <- jeyre_relationships %>% filter(remove != 1)
 
 jeyre_relationships <- jeyre_relationships %>% select(-remove)
 
-# Plots
+# Figure 1
 jeyre_relationships %>% ggplot(aes(chapter, sentiment, colour = speaker)) + geom_line(se = FALSE) + 
   labs(title = "Tracking sentiment to Jane thoughout Novel", x = 'Chapter', y = 'Sentiment', color = 'Speaker') + 
   lims(x=c(0,40), y = c(-5,5)) +
   theme_bw()
 
+# Figure 3
 jeyre_relationships %>% ggplot(aes(chapter, counts, colour = speaker)) + geom_line(se = FALSE) + 
   labs(title = "Tracking interactions to Jane thoughout Novel", x = 'Chapter', y = 'Interactions', color = 'Speaker') + 
   lims(x=c(0,40), y = c(0,20)) + 
@@ -240,6 +247,7 @@ jeyre_relationships %>% ggplot(aes(chapter, counts, colour = speaker)) + geom_li
 
 # Getting a weighted average of all sentiment from Jane
 
+# Right Column of Table 14
 mean_sentiment_from_jane <- 
   sum(jeyre_relationships$sentiment * jeyre_relationships$counts)/sum(jeyre_relationships$counts)
 

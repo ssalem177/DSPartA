@@ -1,5 +1,5 @@
 # Author: Sami Salem
-# Date: 11/08/2025
+# Date: 15/08/2025
 
 
 # Loading packages
@@ -30,32 +30,10 @@ jeyre_test <- tibble(speaker = numeric(100),addressee=numeric(100))
 
 # Checking accuracy
 
+# Values for Table 11
 speaker_accuracy <- sum(jeyre_test$speaker)/100
 addressee_accuracy <- sum(jeyre_test$addressee)/100
-full_accuracy <- sum(jeyre_test %>% filter(speaker == 1) %>% filter(addressee == 1))/100
-
-
-
-########### FOR FIRST HALF NOT CHECKING IF PAIR CORRECT, BUT ORDER WRONG, SECOND I AM
-
-# Populated first 20 as 0f 9/8/25
-
-# speaker accuracy 0.5, addressee 0.4, both same time 0.25
-
-# Populated first 50 as of 10/8/2025 21:42. Speaker accuracy 0.48, Addressee 0.42, both 0.28
-
-# Populated first 60 as of 10/8/2025 21:58. Speaker accuracy 0.53, Addressee 0.5, both 0.35
-
-# Populated first 70 as of 10/8/2025 22:51. Speaker accuracy 0.57, Addressee 0.51, both 0.37
-
-# Populated first 80 as of 10/8/2025 23:02. Speaker accuracy 0.58, Addressee 0.49, both 0.35
-
-# Populated all 100 as of 11/8/2025 12:51. Speaker accuracy 0.52, Addressee 0.47, both 0.32, (5 out of 50 has speaker-addressee-swap)
-
-############## COMPLETE ########################################################
-
-
-
-
+full_accuracy_tibble <- (jeyre_test %>% filter(speaker == 1) %>% filter(addressee == 1))/100
+full_accuracy <- length(full_accuracy_tibble$speaker)/100
 
 
