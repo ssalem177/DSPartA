@@ -13,7 +13,7 @@ jeyre_fix <- read_csv("jeyre_fix.csv")
 
 ###########THE FOLLOWING CODE IS USED TO ANALYSE DIFFERENT DICTIONARIES#########
 
-# Comparing "afinn" and "bing" dictionary by coverage
+# Comparing "afinn", "nrc" and "bing" dictionary by coverage
 
 dialogue <- bind_cols(interactions = jeyre_fix$dialogue,
                       # how many matches for each dictionary
